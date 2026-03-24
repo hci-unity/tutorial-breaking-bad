@@ -67,9 +67,10 @@ crashlytics-build.properties
 # TextMeshPro generated files
 /[Aa]ssets/TextMesh Pro/Resources/Fonts & Materials/*.asset
 
-# Plastic SCM
+# Plastic SCM / Unity Version Control
 .plastic/
 ignore.conf
+*.private.0
 
 # OS generated
 .DS_Store
