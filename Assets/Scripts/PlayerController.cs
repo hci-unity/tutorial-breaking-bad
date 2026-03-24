@@ -80,4 +80,12 @@ public class PlayerController : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.MoveRotation(targetRotation);
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
 }

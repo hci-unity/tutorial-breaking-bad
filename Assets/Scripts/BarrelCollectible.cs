@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class BarrelCollectible : MonoBehaviour
 {
     public float rotationSpeed = 30f;
@@ -15,7 +16,14 @@ public class BarrelCollectible : MonoBehaviour
 
         var col = GetComponent<BoxCollider>();
         if (col != null)
-            col.isTrigger = false;
+            col.isTrigger = true;
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.useGravity = false;
+            rb.isKinematic = true;
+        }
     }
 
     void Update()
