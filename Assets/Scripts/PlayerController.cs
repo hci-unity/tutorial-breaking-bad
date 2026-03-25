@@ -6,6 +6,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
+    public float sprintMultiplier = 1.8f;
     public TextMeshProUGUI countLabelText;
     public TextMeshProUGUI countValueText;
     public GameObject winTextObject;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     private Vector3 movement;
     private Quaternion targetRotation;
+    private bool isSprinting;
 
     void Start()
     {
@@ -71,9 +73,11 @@ public class PlayerController : MonoBehaviour
 
         movement = movement.normalized;
 
+        isSprinting = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed && movement.magnitude > 0f;
+
         if (animator != null)
         {
-            animator.SetFloat("Speed", movement.magnitude);
+            animator.SetFloat("Speed", isSprinting ? 2f : movement.magnitude);
         }
 
         if (movement != Vector3.zero)
@@ -84,7 +88,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 targetVelocity = movement * speed;
+        float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
+        Vector3 targetVelocity = movement * currentSpeed;
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
         rb.angularVelocity = Vector3.zero;
         rb.MoveRotation(targetRotation);
@@ -107,6 +112,15 @@ public class PlayerController : MonoBehaviour
         if (count >= 10)
         {
             winTextObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Win";
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
+    }
+
+    public void OnCaughtByEnemy()
+    {
+        Destroy(gameObject);
+        winTextObject.SetActive(true);
+        winTextObject.GetComponent<TextMeshProUGUI>().text = "You l~e";
     }
 }
