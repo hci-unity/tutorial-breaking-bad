@@ -34,7 +34,7 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "hci-game.slnx",
+    "dotnet.defaultSolution": "tutorial-breaking-bad.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false,
     "[yaml]": {
         "editor.formatOnSave": false
